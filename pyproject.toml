@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "ostrich"
-version = "0.1.0"
+name = "py-ostrich"
+version = "0.1.1"
 authors = [
   { name="oha", email="aaronoh2003@hotmail.com" },
 ]

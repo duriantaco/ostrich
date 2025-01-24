@@ -20,7 +20,7 @@ This package turns this concept into a (hopefully) useful marking system for you
 ## Installation
 
 ```bash
-pip install ostrich-problems
+pip install py-ostrich
 ```
 
 ## Quick Start
