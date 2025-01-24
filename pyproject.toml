@@ -1,0 +1,27 @@
+# pyproject.toml
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ostrich-problems"
+version = "0.1.0"
+authors = [
+  { name="oha", email="aaronoh2003@hotmail.com" },
+]
+description = "A trolling project turned practical (hopefully) Python decorator for marking and ignoring problems in your code"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Documentation",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/duriantaco/ostrich"
+"Bug Tracker" = "https://github.com/duriantaco/ostrich/issues"
