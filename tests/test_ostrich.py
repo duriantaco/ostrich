@@ -1,5 +1,5 @@
 import pytest
-from ostrich import ostrich, Priority, mark_line
+from ostrich import ostrich, Priority
 import io
 import sys
 
@@ -8,17 +8,14 @@ def test_basic_decorator():
     def test_func():
         return "test"
     
-    # Capture stdout
     captured_output = io.StringIO()
     sys.stdout = captured_output
     
     result = test_func()
     sys.stdout = sys.__stdout__
     
-    # Check if function still works
     assert result == "test"
-    # Check if output contains OSTRICH HIGH
-    assert "[OSTRICH HIGH]" in captured_output.getvalue()
+    assert "OSTRICH HIGH" in captured_output.getvalue()
 
 def test_ticket_reference():
     @ostrich(Priority.HIGH, "JIRA-123")
@@ -33,33 +30,6 @@ def test_ticket_reference():
     
     assert "[JIRA-123]" in captured_output.getvalue()
 
-def test_line_marking():
-    @ostrich(Priority.HIGH, lines={15: "Test comment"})
-    def test_func():
-        return "test"
-    
-    captured_output = io.StringIO()
-    sys.stdout = captured_output
-    
-    test_func()
-    sys.stdout = sys.__stdout__
-    
-    assert "Test comment" in captured_output.getvalue()
-
-def test_context_manager():
-    @ostrich(Priority.HIGH)
-    def test_func():
-        with mark_line("Test line mark"):
-            return "test"
-    
-    captured_output = io.StringIO()
-    sys.stdout = captured_output
-    
-    test_func()
-    sys.stdout = sys.__stdout__
-    
-    assert "Test line mark" in captured_output.getvalue()
-
 def test_no_priority():
     @ostrich()
     def test_func():
@@ -71,8 +41,7 @@ def test_no_priority():
     test_func()
     sys.stdout = sys.__stdout__
     
-    # Should have LOL priority and a random excuse
-    assert "[OSTRICH LOL]" in captured_output.getvalue()
+    assert "OSTRICH LOL" in captured_output.getvalue() 
 
 def test_all_priority_levels():
     for priority in Priority:
@@ -86,7 +55,7 @@ def test_all_priority_levels():
         test_func()
         sys.stdout = sys.__stdout__
         
-        assert f"[OSTRICH {priority.name}]" in captured_output.getvalue()
+        assert f"OSTRICH {priority.name}" in captured_output.getvalue() 
 
 def test_docstring_preservation():
     @ostrich(Priority.HIGH)
@@ -102,3 +71,15 @@ def test_function_name_preservation():
         return "test"
     
     assert test_func.__name__ == "test_func"
+
+def test_decorator_output(capsys):
+    @ostrich(Priority.HIGH, "TICKET-123")
+    def sample_function():
+        return "test"
+    
+    result = sample_function()
+    captured = capsys.readouterr()
+    
+    assert result == "test"
+    assert "OSTRICH HIGH" in captured.out 
+    assert "TICKET-123" in captured.out

@@ -26,69 +26,63 @@ pip install ostrich-problems
 ## Quick Start
 
 ```python
-from ostrich import ostrich, Priority, mark_line
+from ostrich import ostrich, Priority
 
-# mark high priority issues with specific line problems
-@ostrich(Priority.HIGH, "JIRA-123", lines={
+# Mark high priority issues with specific line problems
+@ostrich(Priority.HIGH, "PERF-123", lines={
     15: "This regex makes senior devs cry",
     20: "O(n³) but we pretend it's O(1)"
 })
 def slow_as_hell_function():
-    print("This function is slower than my career progress...")
-    with mark_line("This loop needs Jesus"):
-        for i in range(1000):  # this line will be marked
-            do_something_terrible(i)
+    pattern = r'^[^\s]{0,}(?<=\w{3})\d+'  
+    for i in range(1000000):            
+        do_something_terrible(i)
     return "somehow it worked"
 
-# mark medium priority stuff you'll "fix later"
+# medium priority stuff you'll "fix later"
 @ostrich(Priority.MEH)
 def might_explode():
-    with mark_line("Copy pasted from a 2009 forum"):
-        legacy_code_block()
+    x = {'a': 1, 'b': 2}  
     return "🤞"
 
-# ignore it with style (gets random funny excuse)
 @ostrich()
 def pure_chaos():
-    with mark_line("Nobody remembers what this does"):
-        important_business_logic()
+    important_business_logic()
     return "¯\_(ツ)_/¯"
 ```
 
 ## Real world example
 
 ```python
-from ostrich import ostrich, Priority, mark_line
+from ostrich import ostrich, Priority
 
-# Mark performance issues
 @ostrich(Priority.HIGH, "PERF-123", lines={
     15: "This query makes the DB cry",
     22: "N+1 query problem but it's Friday"
 })
 def calculate_user_metrics():
-    results = []
-    with mark_line("O(n²) loop that we'll fix 'later'"):
-        for user in all_users:         # Line will be marked
-            for metric in all_metrics:  # This is fine 🔥
-                results.append(calculate_metric(user, metric))
+    query = "SELECT * FROM users WHERE..."  
+    for metric in all_metrics:             
+        results.append(calculate_metric(user, metric))
     return results
 
-# Mark sketchy code
-@ostrich(Priority.MEH)
-def cleanup_data():
-    with mark_line("This regex was written at 3am"):
-        pattern = r'^[^\s]{0,}(?<=\w{3})\d+'  # Line will be marked
-    return "Cleaned(ish)!"
-
-# Output will look like:
-# [OSTRICH HIGH][PERF-123]  <- in yellow
+# The output will look like:
+# [OSTRICH HIGH][PERF-123] watching from line 3
 # Marked lines in this function:
-# Line 15: This query makes the DB cry
-# -> query = "SELECT * FROM users WHERE..."
-# Line 22: N+1 query problem but it's Friday
-# -> for metric in all_metrics:
-# -> This loop needs Jesus <- from context manager
+# Line 15 -> This query makes the DB cry
+#     query = "SELECT * FROM users WHERE..."
+# Line 22 -> N+1 query problem but it's Friday
+#     for metric in all_metrics:
 ```
+
+
+## Priority Levels
+
+* Priority.CRITICAL - Red (Oh shit, we're in trouble)
+* Priority.HIGH - Yellow (This is fine... 🔥)
+* Priority.MEH - Blue (We'll fix it... someday)
+* Priority.LOW - Green (GGWP)
+* Priority.LOL - Gray (RIP...)
 
 ## When to Use This?
 
@@ -112,7 +106,8 @@ Because sometimes you need to:
 1. Track technical debt without crying
 2. Make your team laugh about bad code instead of quitting
 3. Show management exactly how many problems you're "working on"
-4. Turn your shame into a feature
+4. Turn your bugs into features
+5. Turn your shame into a feature
 
 ## Disclaimer
 

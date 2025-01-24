@@ -1,10 +1,9 @@
-# pyproject.toml
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "ostrich-problems"
+name = "ostrich"
 version = "0.1.0"
 authors = [
   { name="oha", email="aaronoh2003@hotmail.com" },
@@ -25,3 +24,12 @@ classifiers = [
 [project.urls]
 "Homepage" = "https://github.com/duriantaco/ostrich"
 "Bug Tracker" = "https://github.com/duriantaco/ostrich/issues"
+
+[tool.pytest.ini_options]
+addopts = "-v"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+pythonpath = ["src"] 
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ostrich"]

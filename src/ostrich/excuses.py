@@ -1,3 +1,4 @@
+## src/ostrich/excuses.py
 FUNNY_EXCUSES = [
     "¯\_(ツ)_/¯ It works on my machine!",
     "TODO: Fix this... (maybe in 2025)",
@@ -13,7 +14,7 @@ FUNNY_EXCUSES = [
     "Coffee.exe stopped working",
     "it's not a bug, it's an undocumented feature",
     "Days without technical debt: -42",
-    "I'll fix this when Bitcoin hits 100k",
+    "I'll fix this when Bitcoin hits 1mil",
     "TODO: Make this better (last modified 3 years ago)",
     "This code is like my todo list - growing but ignored",
     "Technical debt? More like technical investment!",
